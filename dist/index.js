@@ -39,6 +39,9 @@ function loadEventListeners() {
 
         // Clear the 'new task' input.
         input.value = '';
+
+        // Page always reloading after data submit in form, but we don't need that. So we stopped this default behaviour.
+        event.preventDefault();
       } catch (err) {
         console.error(`addTask(): ${err}`);
       };
@@ -47,7 +50,9 @@ function loadEventListeners() {
     // Delete ONE targeted task from the list.
     function deleteTask(event) {
       try {
+        // Event fires off if we click on something with class of "fas fa-times".
         if (event.target.className === 'fas fa-times') {
+          // We need to delete 'li', so we can just delete parent of our target, which is exactly this 'li'. 
           event.target.parentElement.remove();
         };
       } catch (err) {
@@ -58,7 +63,9 @@ function loadEventListeners() {
     // Delete ALL tasks from list.
     function clearTasksList(event) {
       try {
+        // Checking if we have at least one child element in our parent element (task list)...
         while (tasksList.firstChild) {
+          // ... and remove it until there are none.
           tasksList.removeChild(tasksList.firstChild);
         };
 
