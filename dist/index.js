@@ -10,7 +10,7 @@ function loadEventListeners() {
     // Add 'ADD TASK' event.
     form.addEventListener('submit', addTask);
 
-    // Add 'DELETE TASK' event.
+    // Add 'DELETE TASK' event on ALL document body (later in deleteTask() we specifies the target).
     document.body.addEventListener('click', deleteTask);
 
     // Add 'CLEAR TASK LIST' event.
@@ -50,8 +50,8 @@ function loadEventListeners() {
     // Delete ONE targeted task from the list.
     function deleteTask(event) {
       try {
-        // Event fires off if we click on something with class of "fas fa-times".
-        if (event.target.className === 'fas fa-times') {
+        // Event fires off if we click on something which contains class "fas".
+        if (event.target.classList.contains('fas')) {
           // We need to delete 'li', so we can just delete parent of our target, which is exactly this 'li'. 
           event.target.parentElement.remove();
         };
