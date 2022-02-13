@@ -1,8 +1,8 @@
 // UI VARIABLES.
 const clearButton = document.querySelector('.tasks-clear');
-const filter = document.querySelector('.filter');
+const filterInput = document.querySelector('.filter');
 const form = document.querySelector('#task-form');
-const input = document.querySelector('.task-input');
+const taskInput = document.querySelector('.task-input');
 const tasksList = document.querySelector('.tasks-list');
 
 function loadEventListeners() {
@@ -29,7 +29,7 @@ function loadEventListeners() {
         li.innerHTML = '<i class="fas fa-times"></i>';
 
         // Create text node, insert in it value from 'new task' input.
-        const textNode = document.createTextNode(input.value);
+        const textNode = document.createTextNode(taskInput.value);
 
         // Push this node to 'li' element.
         li.appendChild(textNode);
@@ -38,7 +38,7 @@ function loadEventListeners() {
         tasksList.appendChild(li);
 
         // Clear the 'new task' input.
-        input.value = '';
+        taskInput.value = '';
 
         // Page always reloading after data submit in form, but we don't need that. So we stopped this default behaviour.
         event.preventDefault();
@@ -63,10 +63,17 @@ function loadEventListeners() {
     // Delete ALL tasks from list.
     function clearTasksList(event) {
       try {
-        // Checking if we have at least one child element in our parent element (task list)...
-        while (tasksList.firstChild) {
-          // ... and remove it until there are none.
-          tasksList.removeChild(tasksList.firstChild);
+        // // VARIANT 1: 'WHILE' loop + 'removeChild()' (FASTER METHOD).
+        // // Checking if we have at least one child element in our parent element (task list)...
+        // while (tasksList.firstChild) {
+        //   // ... and remove it until there are none.
+        //   tasksList.removeChild(tasksList.firstChild);
+        // };
+
+        // VARIANT 2: 'innerHTML' (SLOWER METHOD).
+        // We just assign target's 'innerHTML' with empty string.
+        if (confirm('ARE YOU SURE?')) {
+          tasksList.innerHTML = '';
         };
 
         event.preventDefault();
