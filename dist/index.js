@@ -16,6 +16,9 @@ function loadEventListeners() {
     // Add 'CLEAR TASK LIST' event.
     clearButton.addEventListener('click', clearTasksList);
 
+    // Add 'FILTER' event.
+    filterInput.addEventListener('input', filterTasks);
+
     // Add task in list.
     function addTask(event) {
       try {
@@ -47,7 +50,7 @@ function loadEventListeners() {
       };
     };
 
-    // Delete ONE targeted task from the list.
+    // Delete ONE targeted task from task list.
     function deleteTask(event) {
       try {
         // Event fires off if we click on something which contains class "fas".
@@ -60,32 +63,63 @@ function loadEventListeners() {
       };
     };
 
-    // Delete ALL tasks from list.
+    // Delete ALL tasks from task list.
     function clearTasksList(event) {
       try {
-        // // VARIANT 1: 'WHILE' loop + 'removeChild()' (FASTER METHOD).
-        // // Checking if we have at least one child element in our parent element (task list)...
-        // while (tasksList.firstChild) {
-        //   // ... and remove it until there are none.
-        //   tasksList.removeChild(tasksList.firstChild);
-        // };
-
-        // VARIANT 2: 'innerHTML' (SLOWER METHOD).
-        // Checking if the task list has at least one 'firstElementChild'.
-        // Just 'firstChild' won't do cause even if we delete all tasks from task list one by one - we'll still have a text nodes (from linebreaks).
+        // VARIANT 1: 'WHILE' loop + 'removeChild()' (FASTER METHOD).
+        // Checking if we have at least one 'firstElementChild' element (basically task) in our parent element (task list).
         if (tasksList.firstElementChild) {
           if (confirm('ARE YOU SURE?')) {
-            // We just assign target's 'innerHTML' with empty string.
-            tasksList.innerHTML = '';
+            // Here we put 'firstChild' because we want to check existence not only elements but also text nodes from linebreaks...
+            while (tasksList.firstChild) {
+              // ... and remove them until nothing left.
+              tasksList.removeChild(tasksList.firstChild);
+            };
           };
         } else {
           alert('THERE\'S NOTHING TO DELETE!');
         };
 
+        // // VARIANT 2: 'innerHTML' (SLOWER METHOD).
+        // // Checking if the task list has at least one 'firstElementChild'.
+        // // Just 'firstChild' won't do because even if we delete all tasks from task list one by one - we'll still have a text nodes from linebreaks in node list.
+        // if (tasksList.firstElementChild) {
+        //   if (confirm('ARE YOU SURE?')) {
+        //     // We just assign target's 'innerHTML' with empty string.
+        //     tasksList.innerHTML = '';
+        //   };
+        // } else {
+        //   alert('THERE\'S NOTHING TO DELETE!');
+        // };
+
         event.preventDefault();
       } catch (err) {
         console.error(`clearTaskList(): ${err}`);
       };
+    };
+
+    // Tasks filtering.
+    function filterTasks(event) {
+      // Getting the text from search input and transform it to lower case.
+      const text = event.target.value.toLowerCase();
+
+      // Getting the already existed tasks from task list. 
+      const items = document.querySelectorAll('.tasks-list-item');
+
+      // Iterating NodeList with tasks.
+      items.forEach((task) => {
+        // Getting the text from each task and transform it to lower case.
+        const item = task.innerText.toLowerCase();
+
+        // Compare text from filter input with text from each existed task.
+        if (item.indexOf(text) != -1) {
+          // Result of comparison positive - display that component as usual.
+          task.style.display = 'flex';
+          // Result of comparison negative - don't display unmatched component at all.
+        } else {
+          task.style.display = 'none';
+        };
+      });
     };
   } catch (err) {
     console.error(`loadEventListeners(): ${err}`);
