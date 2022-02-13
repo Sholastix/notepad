@@ -71,9 +71,15 @@ function loadEventListeners() {
         // };
 
         // VARIANT 2: 'innerHTML' (SLOWER METHOD).
-        // We just assign target's 'innerHTML' with empty string.
-        if (confirm('ARE YOU SURE?')) {
-          tasksList.innerHTML = '';
+        // Checking if the task list has at least one 'firstElementChild'.
+        // Just 'firstChild' won't do cause even if we delete all tasks from task list one by one - we'll still have a text nodes (from linebreaks).
+        if (tasksList.firstElementChild) {
+          if (confirm('ARE YOU SURE?')) {
+            // We just assign target's 'innerHTML' with empty string.
+            tasksList.innerHTML = '';
+          };
+        } else {
+          alert('THERE\'S NOTHING TO DELETE!');
         };
 
         event.preventDefault();
