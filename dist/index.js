@@ -232,8 +232,8 @@ function loadEventListeners() {
           if (item.indexOf(text) != -1) {
             // Result of comparison positive - display that component as usual.
             task.style.display = 'flex';
-            // Result of comparison negative - don't display unmatched component at all.
           } else {
+            // Result of comparison negative - don't display unmatched component at all.
             task.style.display = 'none';
           };
         });
