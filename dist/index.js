@@ -72,32 +72,36 @@ function loadEventListeners() {
     // Add task in list.
     function addTask(event) {
       try {
-        // Create 'li' element.
-        const li = document.createElement('li');
+        if (taskInput.value.length <= maxCharsNumber) {
+          // Create 'li' element.
+          const li = document.createElement('li');
 
-        // Add a class for new 'li' element.
-        li.className = 'tasks-list-item';
+          // Add a class for new 'li' element.
+          li.className = 'tasks-list-item';
 
-        // Add an icon (html-element) into 'li' element.
-        li.innerHTML = '<i class="fas fa-times"></i>';
+          // Add an icon (html-element) into 'li' element.
+          li.innerHTML = '<i class="fas fa-times"></i>';
 
-        // Create text node, insert in it value from 'new task' input.
-        const textNode = document.createTextNode(taskInput.value);
+          // Create text node, insert in it value from 'new task' input.
+          const textNode = document.createTextNode(taskInput.value);
 
-        // Push this node to 'li' element.
-        li.appendChild(textNode);
+          // Push this node to 'li' element.
+          li.appendChild(textNode);
 
-        // Append 'li' element to 'ul' (basically add task to task list).
-        tasksList.appendChild(li);
+          // Append 'li' element to 'ul' (basically add task to task list).
+          tasksList.appendChild(li);
 
-        // Store data in Local Storage.
-        storeTaskInLocalStorage(taskInput.value);
+          // Store data in Local Storage.
+          storeTaskInLocalStorage(taskInput.value);
 
-        // Clear the 'new task' input.
-        taskInput.value = '';
+          // Clear the 'new task' input.
+          taskInput.value = '';
 
-        // Reset the 'chars counter' value to default.
-        charsCounter.innerText = maxCharsNumber;
+          // Reset the 'chars counter' value to default.
+          charsCounter.innerText = maxCharsNumber;
+        } else {
+          alert('TOO MUCH CHARS!');
+        };
 
         // Page always reloading after data submit in form, but we don't need that. So we stopped this default behaviour.
         event.preventDefault();
