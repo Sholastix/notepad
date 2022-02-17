@@ -1,4 +1,5 @@
 // UI VARIABLES.
+const charsCounter = document.querySelector('.chars-ui-counter');
 const clearButton = document.querySelector('.tasks-clear');
 const filterInput = document.querySelector('.filter');
 const form = document.querySelector('#task-form');
@@ -22,6 +23,9 @@ function loadEventListeners() {
 
     // Add 'FILTER TASKS' event.
     filterInput.addEventListener('input', filterTasks);
+
+    // Add 'CHARS COUNTER' event.
+    taskInput.addEventListener('input', showCharsNumber);
 
     // FUNCTIONS.
     // Get tasks from Local Storage.
@@ -92,6 +96,9 @@ function loadEventListeners() {
         // Clear the 'new task' input.
         taskInput.value = '';
 
+        // Reset the 'chars counter' value to default.
+        charsCounter.innerText = maxCharsNumber;
+
         // Page always reloading after data submit in form, but we don't need that. So we stopped this default behaviour.
         event.preventDefault();
       } catch (err) {
@@ -119,8 +126,6 @@ function loadEventListeners() {
 
         // Converting object back to string and set it in Local Storage.
         localStorage.setItem('tasks', JSON.stringify(tasks));
-
-        console.log(tasks);
       } catch (err) {
         console.error(`storeTaskInLocalStorage(): ${err}`);
       };
@@ -164,7 +169,7 @@ function loadEventListeners() {
             // When they matched each other - delete this task from array by it's index.
             tasks.splice(index, 1);
           };
-          
+
           // Finally its time to set modified array to Local Storage.
           localStorage.setItem('tasks', JSON.stringify(tasks));
         });
@@ -243,6 +248,40 @@ function loadEventListeners() {
     };
   } catch (err) {
     console.error(`loadEventListeners(): ${err}`);
+  };
+
+  // Chars Counter.
+  // Set the max number of available chars.
+  const maxCharsNumber = 50;
+  // Set the default value of chars counter.
+  charsCounter.innerText = maxCharsNumber;
+
+  function showCharsNumber() {
+    try {
+      // Get the chars from task input.
+      const inputCharsNumber = taskInput.value.length;
+
+      // Now it's time to set the conditions.
+      if (inputCharsNumber <= maxCharsNumber) {
+        // Calculate the current number of chars showing in our counter...
+        charsCounter.innerText = maxCharsNumber - inputCharsNumber;
+        // ...and set the styles. We need it for correct display after switching back from 'warning' styles.
+        charsCounter.style = `
+          color: green; 
+          font-weight: normal;
+        `;
+      } else {
+        // If we exceed the value of 'maxCharsNumber' - we get the warning.
+        charsCounter.innerText = 'CHARS OVERLOAD :)';
+        // Changing styles for warning.
+        charsCounter.style = `
+          color: red; 
+          font-weight: bold;
+        `;
+      };
+    } catch (err) {
+      console.error(`showCharNumber(): ${err}`);
+    };
   };
 };
 

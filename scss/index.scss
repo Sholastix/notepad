@@ -63,9 +63,14 @@ ul {
 
       #task-form {
         .input-field {
-          .task-label {
-            margin-right: 1rem;
-          }
+          .chars-ui {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+
+            &-counter {
+              color: green;
+            };
+          };
 
           .task-input {
             border-top: none;
@@ -127,7 +132,7 @@ ul {
       }
 
       .tasks-list {
-        height: 33rem;
+        height: 29rem;
         overflow-y: auto;
 
         &-item {

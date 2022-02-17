@@ -65,8 +65,11 @@ ul {
     .container .card-content h2 {
       color: darkblue;
       margin-bottom: 4rem; }
-    .container .card-content #task-form .input-field .task-label {
-      margin-right: 1rem; }
+    .container .card-content #task-form .input-field .chars-ui {
+      font-size: 1.4rem;
+      margin-bottom: 1rem; }
+      .container .card-content #task-form .input-field .chars-ui-counter {
+        color: green; }
     .container .card-content #task-form .input-field .task-input {
       border-top: none;
       border-left: none;
@@ -103,7 +106,7 @@ ul {
         border-bottom: 0.2rem solid blue;
         outline: none; }
     .container .card-action .tasks-list {
-      height: 33rem;
+      height: 29rem;
       overflow-y: auto; }
       .container .card-action .tasks-list-item {
         display: flex;
