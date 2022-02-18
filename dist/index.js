@@ -274,14 +274,29 @@ function loadEventListeners() {
           color: green; 
           font-weight: normal;
         `;
+        
+        // Get the element from DOM.
+        const taskSubmit = document.querySelector('.button-submit > .btn-main');
+        // Turn off 'disabled' pseudo-class.
+        taskSubmit.disabled = false;
+        // Turn on pointer effects.
+        taskSubmit.style.pointerEvents = 'auto';
       } else {
         // If we exceed the value of 'maxCharsNumber' - we get the warning.
         charsCounter.innerText = 'CHARS OVERLOAD :)';
+
         // Changing styles for warning.
         charsCounter.style = `
           color: red; 
           font-weight: bold;
         `;
+
+        // Get the element from DOM.
+        const taskSubmit = document.querySelector('.button-submit > .btn-main');
+        // Turn on 'disabled' pseudo-class.
+        taskSubmit.disabled = true;
+        // Turn off pointer effects.
+        taskSubmit.style.pointerEvents = 'none';
       };
     } catch (err) {
       console.error(`showCharNumber(): ${err}`);

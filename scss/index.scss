@@ -69,8 +69,8 @@ ul {
 
             &-counter {
               color: green;
-            };
-          };
+            }
+          }
 
           .task-input {
             border-top: none;
@@ -93,6 +93,10 @@ ul {
             font-size: 1.2rem;
             font-weight: bold;
             margin: 2rem 0 4rem 0;
+
+            &:disabled {
+              opacity: 0.3;
+            }
 
             &:hover {
               background-color: $main-color;
