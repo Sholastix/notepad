@@ -8,6 +8,15 @@ const tasksList = document.querySelector('.tasks-list');
 
 function loadEventListeners() {
   try {
+    // SOLUTION TO FIREFOX BUG.
+    // In the last version of Firefox (91.6.0esr) I've got a strange behaviour of many sites - values in all input fields are not cleared after reloading the web page.
+    // Don't know if its Firefox's bug or feature, but it cause trouble with default value in chars counter UI of this application.
+    // So we just do the cleaning ourselves in simplest way:
+    if (taskInput.value.length > 0 || filterInput.value.length > 0) {
+      filterInput.value = '';
+      taskInput.value = '';
+    };
+
     // EVENTS.
     // Add 'GET TASKS FROM LOCAL STORAGE' event.
     document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);
@@ -250,57 +259,58 @@ function loadEventListeners() {
         console.error(`filterTasks(): ${err}`);
       };
     };
+
+    // Chars Counter.
+    // Set the max number of available chars.
+    const maxCharsNumber = 50;
+
+    // Set the default value of chars counter in UI.
+    charsCounter.innerText = maxCharsNumber;
+  
+    function showCharsNumber() {
+      try {
+        // Get the chars from task input.
+        const inputCharsNumber = taskInput.value.length;
+
+        // Now it's time to set the conditions.
+        if (inputCharsNumber <= maxCharsNumber) {
+          // Calculate the current number of chars showing in our counter...
+          charsCounter.innerText = maxCharsNumber - inputCharsNumber;
+          // ...and set the styles. We need it for correct display after switching back from 'warning' styles.
+          charsCounter.style = `
+            color: green; 
+            font-weight: normal;
+          `;
+
+          // Get the element from DOM.
+          const taskSubmit = document.querySelector('.button-submit > .btn-main');
+          // Turn off 'disabled' pseudo-class.
+          taskSubmit.disabled = false;
+          // Turn on pointer effects.
+          taskSubmit.style.pointerEvents = 'auto';
+        } else {
+          // If we exceed the value of 'maxCharsNumber' - we get the warning.
+          charsCounter.innerText = 'CHARS OVERLOAD :)';
+
+          // Changing styles for warning.
+          charsCounter.style = `
+            color: red; 
+            font-weight: bold;
+          `;
+
+          // Get the element from DOM.
+          const taskSubmit = document.querySelector('.button-submit > .btn-main');
+          // Turn on 'disabled' pseudo-class.
+          taskSubmit.disabled = true;
+          // Turn off pointer effects.
+          taskSubmit.style.pointerEvents = 'none';
+        };
+      } catch (err) {
+        console.error(`showCharNumber(): ${err}`);
+      };
+    };
   } catch (err) {
     console.error(`loadEventListeners(): ${err}`);
-  };
-
-  // Chars Counter.
-  // Set the max number of available chars.
-  const maxCharsNumber = 50;
-  // Set the default value of chars counter.
-  charsCounter.innerText = maxCharsNumber;
-
-  function showCharsNumber() {
-    try {
-      // Get the chars from task input.
-      const inputCharsNumber = taskInput.value.length;
-
-      // Now it's time to set the conditions.
-      if (inputCharsNumber <= maxCharsNumber) {
-        // Calculate the current number of chars showing in our counter...
-        charsCounter.innerText = maxCharsNumber - inputCharsNumber;
-        // ...and set the styles. We need it for correct display after switching back from 'warning' styles.
-        charsCounter.style = `
-          color: green; 
-          font-weight: normal;
-        `;
-        
-        // Get the element from DOM.
-        const taskSubmit = document.querySelector('.button-submit > .btn-main');
-        // Turn off 'disabled' pseudo-class.
-        taskSubmit.disabled = false;
-        // Turn on pointer effects.
-        taskSubmit.style.pointerEvents = 'auto';
-      } else {
-        // If we exceed the value of 'maxCharsNumber' - we get the warning.
-        charsCounter.innerText = 'CHARS OVERLOAD :)';
-
-        // Changing styles for warning.
-        charsCounter.style = `
-          color: red; 
-          font-weight: bold;
-        `;
-
-        // Get the element from DOM.
-        const taskSubmit = document.querySelector('.button-submit > .btn-main');
-        // Turn on 'disabled' pseudo-class.
-        taskSubmit.disabled = true;
-        // Turn off pointer effects.
-        taskSubmit.style.pointerEvents = 'none';
-      };
-    } catch (err) {
-      console.error(`showCharNumber(): ${err}`);
-    };
   };
 };
 
