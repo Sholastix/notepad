@@ -284,9 +284,9 @@ function loadEventListeners() {
 
           // Get the element from DOM.
           const taskSubmit = document.querySelector('.button-submit > .btn-main');
-          // Turn off 'disabled' pseudo-class.
+          // TURN OFF 'disabled' pseudo-class.
           taskSubmit.disabled = false;
-          // Turn on pointer effects.
+          // TURN ON pointer effects.
           taskSubmit.style.pointerEvents = 'auto';
         } else {
           // If we exceed the value of 'maxCharsNumber' - we get the warning.
@@ -300,9 +300,9 @@ function loadEventListeners() {
 
           // Get the element from DOM.
           const taskSubmit = document.querySelector('.button-submit > .btn-main');
-          // Turn on 'disabled' pseudo-class.
+          // TURN ON 'disabled' pseudo-class.
           taskSubmit.disabled = true;
-          // Turn off pointer effects.
+          // TURN OFF pointer effects.
           taskSubmit.style.pointerEvents = 'none';
         };
       } catch (err) {
